@@ -37,5 +37,5 @@ while (amount < bank_balance) {
 amount = amount + calculateTax(amount);
 console.log("Your purchase:" +  fromatAmount(amount));
 if (amount > bank_balance) {
-    console.log("You can't afford this purchase. :(")
+    console.log("You can't afford this purchase. :)")
 }
