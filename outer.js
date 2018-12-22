@@ -31,7 +31,7 @@ function fromatAmount (amount) {
 while (amount < bank_balance) {
     amount = amount + PHONG_PRICE;
     if (amount < SPENDING_THRSHOLD) {
-        amount = amount + ACCESSORY_PRICE;
+        amount = amount + ACCESSORY_PRICE;你
     }
 }
 amount = amount + calculateTax(amount);
