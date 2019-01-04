@@ -76,3 +76,103 @@ function domReady () {
         }
     }
 }
+var p1 = new Promise(function (resolve, reject) {
+    throw Error("async error");
+}).then(res => {
+    console.log(res);
+}).catch(err => {
+    console.log(err);
+});
+var p1 = new Promise(function (resolve, reject) {
+    setTimeout(() => {
+        throw Error("async error");
+    })
+}).then(res => {
+    console.log(res);
+}).catch(err => {
+    console.log(err);
+});
+var p1 = new Promise(function (resolve, reject) {
+    resolve();
+}).then(res => {
+    throw Error("sync error");
+});
+function Promise (fn) {
+    doResolve(fn, this);
+}
+function doResolve (fn, self) {
+    try {
+        fn (function (value) {
+
+        }, function (reason) {
+
+        })
+    } catch (err) {
+        reject(self, err)
+    }
+}
+Promise.prototype.then = function (onFulfilled, onRejected) {
+    try {
+        onFulfilled(value)
+    } catch (err) {
+        reject(err);
+    }
+};
+function reject (self, newValue) {
+    if (! self._handled) {
+        Promise._unhandledRejectionFn(self._value);
+    }
+}
+function Promise (fn) {
+    this._state = 0; // status flag
+    doResolve(fn, this);
+}
+function doResolve (fn, self) {
+    var done = false; // add event listener
+    try {
+        fn (function (value) {
+            if (done) return;
+            done = true;
+            resolve(self, value);
+        },
+            function (reason) {
+                if (done) return;
+                done = true;
+                reject(self, value);
+            })
+    } catch (err) {
+        if (done) return;
+        done = true;
+        reject(self, err);
+    }
+}
+function resolve (self, newValue) {
+    try {
+        self._state = 1;
+    } catch (err) {
+        reject(self, err);
+    }
+}
+function reject (self, newValue) {
+    self._state = 2;
+    if (! self._handled) {
+        Promise._unhandledRejectionFn(self._value);
+    }
+}
+function hanlde (self, deferred) {
+    setTimeout(function () {
+        var cb = self._state === 1 ? deferred.onFulfilled : deferred.onRejected;
+        if (cb === null) {
+            (self._state === 1 ? resolve : reject) (deferred.promise, self._value);
+            return;
+        }
+        var ret;
+        try {
+            ret = cb(self._value);
+        } catch (e) {
+            reject(deferred.rpomise, e);
+            return;
+        }
+        resolve(deferred.promise, ret)
+    }, 0)
+}
