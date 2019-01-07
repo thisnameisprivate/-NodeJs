@@ -213,3 +213,97 @@ export function setWatcher (page) {
         observer[targetData, targetKey, watchFun, deep, page];
     });
 }
+// 数组去重
+var array_simplep = [1, 2, 2, 3, 3, 4, 4, 5, 5];
+function tfontoss (array_simplep) {
+    if (array_simplep.length <= 0) return;
+    for (var i = 0; i < array_simplep.length; i ++) {
+        if (array_simplep[i] == array_simplep[i + 1]) {
+            array_simplep.splice(i, 1);
+            i --;
+        }
+    }
+    return array_simplep;
+}
+console.log(tfontoss(array_simplep));
+console.log(tfontoss(array_simplep).join('').split('').reverse());
+
+
+function uniq(array){
+    var temp = [];
+    var index = [];
+    var l = array.length;
+    for(var i = 0; i < l; i++) {
+        for(var j = i + 1; j < l; j++){
+            if (array[i] === array[j]){
+                i++;
+                j = i;
+            }
+        }
+        temp.push(array[i]);
+        index.push(i);
+    }
+    console.log(index);
+    return temp;
+}
+var aa = [1,2,2,3,5,3,6,5];
+console.log(uniq(aa));
+
+function Person (name, age) {
+    this.name = name;
+    this.age = age;
+    this.sayParam = function () {
+        console.log(this.name);
+        console.log(this.age);
+    }
+}
+console.log(new Person('tom', 22).sayParam());
+Person('davil', 88);
+console.log(sayParam());
+var person = new Person('tom', 22);
+console.log(Person.prototype.constructor('tom', 22) == person);
+function person () {
+
+}
+console.log(person.prototype.constructor === person);
+// prototype and __proto__
+function getInstance () {
+
+}
+console.log(getInstance());
+function addnum (x, y) {
+    return x + y;
+}
+function getOperation (x, y) {
+    return addnum.call(this, x, y);
+}
+function getOperationApply (x, y) {
+    return addnum.apply(this, [x, y]);
+}
+console.log(getOperation(2, 3));
+console.log(getOperationApply(2, 2));
+// 继承
+function Person () {
+    this.sayName = function () {
+        return this.name;
+    }
+}
+function Chinese (name) {
+    Person.call(this);
+    this.name = name;
+    this.ch = function () {
+        console.log("I'm chinese");
+    }
+}
+function America (name) {
+    Person.call(this);
+    this.name = name;
+    this.ch = function () {
+        console.log("I'm USA");
+    }
+}
+var chinese = new Chinese('chenglong');
+console.log(chinese.ch());
+var America = new America('America');
+console.log(America.ch());
+console.log(new Person());

@@ -8,19 +8,18 @@
     <title>Document</title>
 </head>
 <body>
-<select name="" id="">
-    <option value="">one tree</option>
-</select>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
 </body>
 <script type="text/javascript">
-    main = a => a;
-    console.log(main("ES6"));
-    function foo (i) {
-        if (i < 0) return;
-        console.log('begin: ' + i);
-        foo(i - 1);
-        console.log('end:' + i);
+    var  aClections = document.getElementsByTagName('p');
+    for (var i = 0; i < aClections.length; i ++) {
+        aClections[i].onclick = function () {
+            this.style.color = "red";
+        }
     }
-    foo(2);
 </script>
 </html>
